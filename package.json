@@ -1,0 +1,41 @@
+{
+  "name": "c5-base-converter",
+  "version": "0.0.1",
+  "description": "A package to convert from one base to another",
+  "main": "build/index.js",
+  "types":"build/index.d.ts",
+  "private": false,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "tsc",
+    "test": "jest",
+    "test:watch":"jest --watch",
+    "test:coverage": "jest --clearCache && jest --coverage",
+    "lint": "eslint 'src/**/*.ts'"
+  },
+  "keywords": [
+    "converter",
+    "math",
+    "base",
+    "numbers"
+  ],
+  "author": "C5m7b4",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint": "^8.4.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "jest": "^27.4.3",
+    "prettier": "^2.5.1",
+    "ts-jest": "^27.0.7",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  },
+  "files": [
+    "build/**/*"
+  ]
+}
