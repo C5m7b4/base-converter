@@ -129,6 +129,13 @@ export class BaseConverter {
       throw new Error('Number to convert needs to be a number');
     }
   }
+  /**
+   *
+   * @param numberToConvert
+   * @param baseTo
+   * @param precision
+   * @returns
+   */
   convertFromDecimaltoBaseN(
     numberToConvert: number,
     baseTo: number,
