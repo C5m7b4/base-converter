@@ -129,6 +129,9 @@ describe('convert()', () => {
       expect(converter.convert('10.11', { fromBase: 5, toBase: 2 })).toEqual(
         '101.00'
       );
+      expect(
+        converter.convert('10.11', { fromBase: 5, toBase: 2, precision: 3 })
+      ).toEqual('101.001');
     });
   });
 });
