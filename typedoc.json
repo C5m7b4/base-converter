@@ -1,5 +1,6 @@
 {
     "entryPoints":["./src"],
     "out":"docs",
-    "exclude":["**/**(index|.test).ts"]
+    "name":"Base Converter",
+    "includeVersion":true
 }

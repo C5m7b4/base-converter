@@ -152,6 +152,12 @@ export class BaseConverter {
     return convertedIntegerPart;
   }
 
+  /**
+   * This function allows you to convert in Base 'N' to a number in base 'M'
+   * @param numberToConvert the number in base 'N' we want to convert
+   * @param __namedParameters An object with the options for the convert method to work
+   * @returns The number in base 'N' converted to base 'M'
+   */
   convert(
     numberToConvert: string,
     { fromBase, toBase, precision = 2 }: ConvertOptions
