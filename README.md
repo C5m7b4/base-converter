@@ -1,5 +1,9 @@
 # Base converter
 
+![Testing on pull requests](https://github.com/C5m7b4/c5-base-converter/actions/workflows/test.yaml/badge.svg)
+
+![Deployment to NPM registry](https://github.com/C5m7b4/c5-base-converter/actions/workflows/deployment.yaml/badge.svg)
+
 Base converter is a NPM Package useful for converting numbers from one base to another.
 
 ## Installation
