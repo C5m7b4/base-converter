@@ -1,6 +1,6 @@
 {
   "name": "c5-base-converter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A package to convert from one base to another",
   "main": "build/index.js",
   "types": "build/index.d.ts",
