@@ -9,7 +9,7 @@
     "clean": "rimraf build",
     "check-types": "tsc --noEmit",
     "build:js": "tsc",
-    "build":"npm-run-all clean build:js",
+    "build": "npm-run-all clean build:js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --clearCache && jest --coverage",
@@ -45,5 +45,11 @@
   },
   "files": [
     "build/**/*"
-  ]
+  ],
+  "husky":{
+    "hooks":{
+      "pre-commit":"npm run pre-commit",
+      "pre-push":"npm run test:coverage"
+    }
+  }
 }
