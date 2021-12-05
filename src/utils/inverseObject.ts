@@ -1,3 +1,8 @@
+/**
+ * reverse all key/values of an object
+ * @param object
+ * @returns
+ */
 export const inverseObject = (
   object: Record<string, unknown>
 ): Record<string, unknown> => {
