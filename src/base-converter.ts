@@ -142,7 +142,7 @@ export class BaseConverter {
     precision = 2
   ): string {
     this.validateDecimalNumber(numberToConvert, baseTo, precision);
-    let numberToConvertCopy = numberToConvert;
+    const numberToConvertCopy = numberToConvert;
     const decimalPart = numberToConvertCopy % 1;
     const integerPart = Math.floor(numberToConvertCopy);
     const convertedIntegerPart = this.convertIntegerPart(integerPart, baseTo);
