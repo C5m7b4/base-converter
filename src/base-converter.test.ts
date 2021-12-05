@@ -34,3 +34,35 @@ describe('convertFromDecimaltoBaseN', () => {
     });
   });
 });
+
+describe('when given a number in base N with and integer and decimal part', () => {
+  test('should convert it to a decimal number', () => {
+    expect(converter.convertFromBaseNToDecimal('1101.10', 2)).toBeCloseTo(13.5);
+  });
+});
+
+describe('when given an invalid number in base N', () => {
+  test('should throw an error indicating that the number is not a string', () => {
+    expect(() =>
+      converter.convertFromBaseNToDecimal(1010 as unknown as string, 2)
+    ).toThrowError('Number to convert must be a string');
+  });
+  test('should throw an error indicating that there is nore than one delimiter', () => {
+    expect(() =>
+      converter.convertFromBaseNToDecimal('1101.10.11', 2)
+    ).toThrowError('Number contains more than one delimiter');
+  });
+  test('should throw an error indicating that the number is invalid', () => {
+    expect(() => converter.convertFromBaseNToDecimal('123', 3)).toThrowError(
+      'Invalid Number'
+    );
+    expect(() => converter.convertFromBaseNToDecimal('12@', 3)).toThrowError(
+      'Invalid Number'
+    );
+  });
+  test('should throw an error indicating the baseFrom must be a number', () => {
+    expect(() =>
+      converter.convertFromBaseNToDecimal('123', '5' as unknown as number)
+    ).toThrowError('base from needs to be a number');
+  });
+});
