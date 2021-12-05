@@ -1,5 +1,7 @@
 import { lettersToNumbersMap } from './constants/letters-to-numbers-map';
 import { inverseObject } from './utils/inverseObject';
+import { isInteger } from './utils/is-inteeger';
+import { ConvertOptions } from './interfaces/convert-options';
 
 export class BaseConverter {
   private numbersToLettersMap;
@@ -14,8 +16,8 @@ export class BaseConverter {
     if (typeof numberToConvert !== 'string') {
       throw new Error('Number to convert must be a string');
     }
-    if (typeof baseFrom !== 'number') {
-      throw new Error('base from needs to be a number');
+    if (!isInteger(baseFrom)) {
+      throw new Error('base from needs to be an integer');
     }
 
     const splittedNumberByDelimiter = numberToConvert.split(this.delimiter);
@@ -60,33 +62,104 @@ export class BaseConverter {
     return result;
   }
 
-  convertFromDecimaltoBaseN(numberToConvert: number, baseTo: number): string {
-    let numberToConvertCopy = numberToConvert;
+  private convertIntegerPart(integerPart: number, baseTo: number) {
     const remainders = [];
     while (true) {
-      const quotient = Math.floor(numberToConvertCopy / baseTo);
-      const remainder = numberToConvertCopy % baseTo;
+      const quotient = Math.floor(integerPart / baseTo);
+      const remainder = integerPart % baseTo;
       remainders.push(
         remainder >= 10
           ? this.numbersToLettersMap[remainder]
           : remainder.toString()
       );
-      numberToConvertCopy = quotient;
-      if (numberToConvertCopy < baseTo) {
+      integerPart = quotient;
+      if (integerPart < baseTo) {
         break;
       }
     }
 
     remainders.reverse();
     let result =
-      numberToConvertCopy >= 10
-        ? (this.numbersToLettersMap[numberToConvertCopy] as string)
-        : numberToConvertCopy.toString();
+      integerPart >= 10
+        ? (this.numbersToLettersMap[integerPart] as string)
+        : integerPart.toString();
 
     remainders.forEach((remainder) => {
       result += remainder;
     });
 
+    while (result[0] === '0' && result.length !== 1) {
+      result = result.slice(1);
+    }
     return result;
+  }
+
+  private convertDecimalPart(
+    decimalPart: number,
+    baseTo: number,
+    precision: number
+  ) {
+    let result = '';
+    let decimalPartCopy = decimalPart;
+    for (let i = 0; i < precision; i++) {
+      decimalPartCopy *= baseTo;
+      const integerPart = Math.floor(decimalPartCopy);
+      result +=
+        decimalPartCopy >= 10
+          ? this.numbersToLettersMap[integerPart]
+          : integerPart.toString();
+      decimalPartCopy %= 1;
+    }
+    return result;
+  }
+
+  private validateDecimalNumber(
+    numberToConvert: number,
+    baseTo: number,
+    precision: number
+  ) {
+    if (!isInteger(baseTo)) {
+      throw new Error('Base needs to be an integer');
+    }
+    if (!isInteger(precision)) {
+      throw new Error('Precision needs to be an integer');
+    }
+
+    if (typeof numberToConvert !== 'number') {
+      throw new Error('Number to convert needs to be a number');
+    }
+  }
+  convertFromDecimaltoBaseN(
+    numberToConvert: number,
+    baseTo: number,
+    precision = 2
+  ): string {
+    this.validateDecimalNumber(numberToConvert, baseTo, precision);
+    let numberToConvertCopy = numberToConvert;
+    const decimalPart = numberToConvertCopy % 1;
+    const integerPart = Math.floor(numberToConvertCopy);
+    const convertedIntegerPart = this.convertIntegerPart(integerPart, baseTo);
+
+    if (decimalPart) {
+      const convertedDecimalPart = this.convertDecimalPart(
+        decimalPart,
+        baseTo,
+        precision
+      );
+      return `${convertedIntegerPart}.${convertedDecimalPart}`;
+    }
+
+    return convertedIntegerPart;
+  }
+
+  convert(
+    numberToConvert: string,
+    { fromBase, toBase, precision = 2 }: ConvertOptions
+  ): string {
+    const decimalNumber = this.convertFromBaseNToDecimal(
+      numberToConvert,
+      fromBase
+    );
+    return this.convertFromDecimaltoBaseN(decimalNumber, toBase, precision);
   }
 }
