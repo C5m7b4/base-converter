@@ -7,12 +7,12 @@
   "private": false,
   "repository":{
     "type":"git",
-    "url":"https://github.com/C5m7b4/base-converter.git"
+    "url":"https://github.com/C5m7b4/c5-base-converter.git"
   },
   "bugs":{
-    "url":"https://github.com/C5m7b4/base-converter/issues"
+    "url":"https://github.com/C5m7b4/c5-base-converter/issues"
   },
-  "homepage":"https://github.com/C5m7b4/base-converter#readme",
+  "homepage":"https://github.com/C5m7b4/c5-base-converter#readme",
   "scripts": {
     "clean": "rimraf build",
     "check-types": "tsc --noEmit",
@@ -57,7 +57,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run pre-commit",
+      "pre-commit": "npm run check-types && npm run lint",
       "pre-push": "npm run test:coverage"
     }
   }
